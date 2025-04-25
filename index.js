@@ -3,9 +3,21 @@ import 'dotenv/config';
 import getBrands from './api/getBrands.js';
 import getSeller from './api/getSeller.js';
 import search from './api/search.js';
+import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+app.use(cors({ origin: process.env.ALLOWED_ORIGIN }));
+
+app.use(function (req, res, next) {
+  const origin = req.headers.origin;
+  console.log("Origin: " + origin);
+  if (origin !== process.env.ALLOWED_ORIGIN) {
+    res.status(403).send('403 Forbidden');
+    return;
+  }
+  next();
+});
 
 app.get("/getBrands", (req, res) => {
   getBrands()
