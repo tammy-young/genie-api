@@ -11,7 +11,6 @@ app.use(cors({ origin: process.env.ALLOWED_ORIGIN }));
 
 app.use(function (req, res, next) {
   const origin = req.headers.origin;
-  console.log("Origin: " + origin);
   if (origin !== process.env.ALLOWED_ORIGIN) {
     res.status(403).send('403 Forbidden');
     return;
