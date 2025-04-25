@@ -11,9 +11,7 @@ async function fetchData(url, html = false) {
     });
     const data = html ? response.text() : response.json();
     return data;
-  } catch (e) {
-    console.error("Could not get response:", e);
-  }
+  } catch (e) {}
 }
 
 export default fetchData;
