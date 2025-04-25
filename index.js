@@ -39,6 +39,10 @@ app.get("/search", async (req, res) => {
     });
 });
 
+app.get("/", async (req, res) => {
+  res.send(JSON.stringify({"message": "hello genie api"}, null, 2));
+});
+
 app.listen(PORT, (error) => {
   if (!error)
     console.log("Server is Successfully Running, and App is listening on port " + PORT)
