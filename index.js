@@ -5,7 +5,7 @@ import getSeller from './api/getSeller.js';
 import search from './api/search.js';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.get("/getBrands", (req, res) => {
   getBrands()
@@ -40,7 +40,7 @@ app.get("/search", async (req, res) => {
 });
 
 app.get("/", async (req, res) => {
-  res.send(JSON.stringify({"message": "hello genie api"}, null, 2));
+  res.send(JSON.stringify({ "message": "hello genie api" }, null, 2));
 });
 
 app.listen(PORT, (error) => {
