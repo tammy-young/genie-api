@@ -5,7 +5,7 @@ import getSeller from './api/getSeller.js';
 import search from './api/search.js';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.get("/getBrands", (req, res) => {
   getBrands()
