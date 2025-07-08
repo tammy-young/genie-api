@@ -57,7 +57,7 @@ async function search(req) {
   }
 
   let items = [];
-  let itemIds = [];
+  let uniqueItems = [];
   let stopSearchTime = Date.now() + 10000;
 
   while (Date.now() < stopSearchTime && items.length < MAX_ITEMS_AT_ONCE) {
@@ -75,17 +75,20 @@ async function search(req) {
           continue;
         }
 
+        let saveItemId = itemType === "hair"
+          ? `${item['sellerId']}-${item['customItemId']}`
+          : `${item['sellerId']}-${itemId}`;
+
         if (itemName !== "") {
           let searchedItemName = item.name.toLowerCase();
-          if (searchedItemName.includes(itemName)) {
+          if (searchedItemName.includes(itemName) && !uniqueItems.includes(saveItemId)) {
             addItem = true;
+            uniqueItems.push(saveItemId);
           }
         } else {
-          if (itemType === 'hair') {
+          if (!uniqueItems.includes(saveItemId)) {
             addItem = true;
-          } else if (!itemIds.includes(itemId)) {
-            addItem = true;
-            itemIds.push(itemId);
+            uniqueItems.push(saveItemId);
           }
         }
 
