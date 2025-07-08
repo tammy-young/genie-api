@@ -5,6 +5,8 @@ const ITEMS_KEY = "items";
 const BAZAAR_URL = "https://www.stardoll.com/en/com/user/getStarBazaar.php";
 const FASHION_SEARCH_URL_PART = "?search&type=fashion&Price=24";
 const INTERIOR_SEARCH_URL_PART = "?search&type=interior&Price=24";
+const JEWELRY_SEARCH_URL_PART = "?search&type=jewelry&Price=24";
+const HAIR_SEARCH_URL_PART = "?search&type=hair&Price=24";
 const MAX_ITEMS_AT_ONCE = 20;
 
 async function search(req) {
@@ -17,6 +19,10 @@ async function search(req) {
     searchUrl += FASHION_SEARCH_URL_PART;
   } else if (itemType === "interior") {
     searchUrl += INTERIOR_SEARCH_URL_PART;
+  } else if (itemType === "jewelry") {
+    searchUrl += JEWELRY_SEARCH_URL_PART;
+  } else if (itemType === "hair") {
+    searchUrl += HAIR_SEARCH_URL_PART;
   }
 
   let itemName = req.query.itemName ? req.query.itemName.toLowerCase() : "";
@@ -75,7 +81,9 @@ async function search(req) {
             addItem = true;
           }
         } else {
-          if (!itemIds.includes(itemId)) {
+          if (itemType === 'hair') {
+            addItem = true;
+          } else if (!itemIds.includes(itemId)) {
             addItem = true;
             itemIds.push(itemId);
           }
