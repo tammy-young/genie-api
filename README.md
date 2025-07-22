@@ -5,6 +5,9 @@
 # Genie API 🧞
 Stardoll API Wrapper built with [Express.js](https://expressjs.com/).
 
+# Frontend 🎨
+Please see the [Genie UI](https://github.com/tammy-young/genie).
+
 # Installation 🛠️
 To run the Genie API locally, first clone the repository.
 ```bash
