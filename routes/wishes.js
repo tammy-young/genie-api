@@ -177,7 +177,7 @@ router.post('/available', async (req, res) => {
       return res.status(404).json({ error: 'Wish not found' });
     }
 
-    const bazaarData = await fetchData(CHECK_AVAILABILITY_URL(wish.sellerId));
+    const bazaarData = await fetchData(CHECK_AVAILABILITY_URL(wish.sellerId), false, "wishes");
     const items = bazaarData.bazaarItems || [];
     const isAvailable = items.some(item => parseInt(item.itemId) === wish.itemId && item.sellPrice == wish.sellPrice);
 

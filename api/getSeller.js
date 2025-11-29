@@ -5,7 +5,7 @@ import fetchData from "../utils/fetchData.js";
 const sellerInfoUrl = (id) => { return `http://www.stardoll.com/en/user/sellItems.php?id=${id}` }
 
 async function getSeller(sellerId) {
-  let data = await fetchData(sellerInfoUrl(sellerId), true);
+  let data = await fetchData(sellerInfoUrl(sellerId), true, "username");
   const $ = cheerio.load(data);
   return $('.uname').text().trim();
 }
