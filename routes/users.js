@@ -1,6 +1,7 @@
 import express from 'express';
 import db from '../models/index.js';
 import bcrypt from 'bcrypt';
+import { Sequelize } from 'sequelize';
 
 const { User } = db;
 const router = express.Router();
@@ -49,11 +50,16 @@ router.put('/:id', async (req, res) => {
       updatedFields.password = hashedPassword;
     }
 
+    const existingUser = await User.findOne({ where: { username: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('username')), 'LIKE', username.toLowerCase()) } });
+    if (existingUser && existingUser.id !== req.params.id) {
+      return res.status(400).json({ error: 'Username already exists' });
+    }
+
     const [updated] = await User.update(
       updatedFields,
       { where: { id: req.params.id } }
     );
-    
+
     if (updated) {
       const updatedUser = await User.findByPk(req.params.id);
       res.json({

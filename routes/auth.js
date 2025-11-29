@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../models/index.js';
+import { Sequelize } from 'sequelize';
 
 const { User, Filter, Wish } = db;
 const router = express.Router();
@@ -8,6 +9,16 @@ const router = express.Router();
 router.post('/signup', async (req, res) => {
   try {
     const { name, username, password } = req.body;
+
+    if (!username || !password) {
+      return res.status(400).json({ error: 'Username and password are required' });
+    }
+
+    const existingUser = await User.findOne({ where: { username: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('username')), 'LIKE', username.toLowerCase()) } });
+    if (existingUser) {
+      return res.status(409).json({ error: 'Username already exists' });
+    }
+
     const user = await User.create({ name, username, password });
     res.json({
       id: user.id,
@@ -27,7 +38,7 @@ router.post('/signup', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
-    const user = await User.scope('withPassword').findOne({ where: { username } });
+    const user = await User.scope('withPassword').findOne({ where: { username: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('username')), 'LIKE', username.toLowerCase()) } });
     if (!user || !user.checkPassword(password)) {
       return res.status(401).json({ error: "Invalid username or password" });
     }
