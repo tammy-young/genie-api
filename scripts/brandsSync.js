@@ -173,14 +173,20 @@ async function updateBrandsFromFile() {
 }
 
 async function main() {
-  const action = readlineSync.question('Choose an action: (1) Sync Brands, (2) Update Sellable Status: ');
+  while (true) {
+    const action = readlineSync.question('Choose an action: (1) Sync Brands, (2) Update Sellable Status, (q) Quit: ');
 
-  if (action === '1') {
-    await syncBrands();
-  } else if (action === '2') {
-    await updateSellable();
-  } else {
-    console.log('Invalid action selected.');
+    if (action === '1') {
+      await syncBrands();
+      console.log('');
+    } else if (action === '2') {
+      await updateSellable();
+      console.log('');
+    } else if (action === 'q') {
+      return;
+    } else {
+      console.log('Invalid action selected.');
+    }
   }
 }
 
