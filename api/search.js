@@ -30,18 +30,16 @@ async function search(req) {
   let brandId = req.query.brandId;
   searchUrl += brandId ? `&brands=${brandId}` : "";
 
-  let minPrice = req.query.minPrice;
-  searchUrl += minPrice ? `&minPrice=${minPrice}` : "";
-
-  let maxPrice = req.query.maxPrice;
-  searchUrl += maxPrice ? `&maxPrice=${maxPrice}` : "";
-
   let currencyType = req.query.currencyType;
-  if (currencyType) {
+  if (currencyType && currencyType !== '0') {
+    let minPrice = req.query.minPrice;
+    let maxPrice = req.query.maxPrice;
     searchUrl += (minPrice || maxPrice) && currencyType ? `&currencyType=${currencyType}` : "";
+    searchUrl += maxPrice ? `&maxPrice=${maxPrice}` : "";
+    searchUrl += minPrice ? `&minPrice=${minPrice}` : "";
   }
 
-  let excludeBrands = req.query.excludedBrands || [];
+  let excludeBrands = req.query.excludedBrands?.split(",") || [];
 
   let categories = [];
   let colourId = req.query.colourId;
