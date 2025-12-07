@@ -37,7 +37,9 @@ async function search(req) {
   searchUrl += maxPrice ? `&maxPrice=${maxPrice}` : "";
 
   let currencyType = req.query.currencyType;
-  searchUrl += (minPrice || maxPrice) && currencyType ? `&currencyType=${currencyType}` : "";
+  if (currencyType) {
+    searchUrl += (minPrice || maxPrice) && currencyType ? `&currencyType=${currencyType}` : "";
+  }
 
   let excludeBrands = req.query.excludedBrands || [];
 
