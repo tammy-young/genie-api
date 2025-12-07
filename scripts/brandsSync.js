@@ -47,8 +47,8 @@ async function syncBrands() {
 }
 
 async function updateSellable() {
-  const method = readlineSync.question('Choose method: (1) Single Brand by ID, (2) Multiple Brands from File: ');
-  
+  const method = readlineSync.question('Choose method: (1) Single Brand by ID, (2) Multiple Brands from Unsellable Brands File: ');
+
   if (method === '1') {
     await updateSingleBrand();
   } else if (method === '2') {
@@ -81,8 +81,9 @@ async function updateSingleBrand() {
 }
 
 async function updateBrandsFromFile() {
-  const filePath = readlineSync.question('Enter the path to the file containing brand names (one per line): ');
-  
+
+  const filePath = 'scripts/data/unsellable-brands.txt';
+
   // Check if file exists
   if (!fs.existsSync(filePath)) {
     console.log(`File not found: ${filePath}`);
@@ -126,8 +127,8 @@ async function updateBrandsFromFile() {
 
     for (const brandName of brandNames) {
       try {
-        const brand = await Brand.findOne({ 
-          where: { 
+        const brand = await Brand.findOne({
+          where: {
             name: {
               [db.Sequelize.Op.iLike]: brandName // Case-insensitive search
             }
