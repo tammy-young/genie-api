@@ -2,7 +2,7 @@ import 'dotenv/config';
 import fetchData from "../utils/fetchData.js";
 
 const ITEMS_KEY = "items";
-const BAZAAR_URL = "https://www.stardoll.com/en/com/user/getStarBazaar.php";
+export const BAZAAR_URL = "https://www.stardoll.com/en/com/user/getStarBazaar.php";
 const FASHION_SEARCH_URL_PART = "?search&type=fashion&Price=24";
 const INTERIOR_SEARCH_URL_PART = "?search&type=interior&Price=24";
 const JEWELRY_SEARCH_URL_PART = "?search&type=jewelry&Price=24";
