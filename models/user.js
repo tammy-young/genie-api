@@ -42,14 +42,14 @@ export default (sequelize, DataTypes) => {
       }
     },
     hooks: {
-      beforeCreate: async (user) => {
-        const salt = await bcrypt.genSalt();
-        user.password = bcrypt.hash(user.password, salt);
+      beforeCreate: (user) => {
+        const salt = bcrypt.genSaltSync();
+        user.password = bcrypt.hashSync(user.password, salt);
       },
-      beforeUpdate: async (user) => {
+      beforeUpdate: (user) => {
         if (user.changed('password')) {
-          const salt = await bcrypt.genSalt();
-          user.password = bcrypt.hash(user.password, salt);
+          const salt = bcrypt.genSaltSync();
+          user.password = bcrypt.hashSync(user.password, salt);
         }
       }
     }
