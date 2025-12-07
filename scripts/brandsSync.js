@@ -1,5 +1,5 @@
 import fetchData from "../utils/fetchData.js";
-import { BAZAAR_URL } from "../api/getBrands.js";
+import { BAZAAR_URL } from "../api/search.js";
 import db from "../models/index.js";
 import readlineSync from 'readline-sync';
 import fs from 'fs';

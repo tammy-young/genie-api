@@ -1,7 +1,7 @@
 import db from '../models/index.js';
 import fetchData from '../utils/fetchData.js';
 import readlineSync from 'readline-sync';
-import { BAZAAR_URL } from '../api/getBrands.js';
+import { BAZAAR_URL } from '../api/search.js';
 
 const { Category } = db;
 
