@@ -61,7 +61,7 @@ async function search(req) {
   let stopSearchTime = Date.now() + 10000;
 
   while (Date.now() < stopSearchTime && items.length < MAX_ITEMS_AT_ONCE) {
-    let returnedPage = await fetchData(searchUrl);
+    let returnedPage = await fetchData(searchUrl, false, "search");
 
     // if there are no items on the page then get a new page
     if (returnedPage != null && ITEMS_KEY in returnedPage) {

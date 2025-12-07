@@ -1,37 +1,21 @@
 import 'dotenv/config';
-import fetchData from '../utils/fetchData.js';
+import db from '../models/index.js';
 
-const BAZAAR_URL = "https://www.stardoll.com/en/com/user/getStarBazaar.php";
+const { Brand, Category } = db;
 
-async function getBrands() {
+async function getBrands(onlySellable = false) {
 
-  let pageContent = await fetchData(BAZAAR_URL);
-  const colours = pageContent.item_colors;
-  const brands = pageContent.brands.fashion.brand.concat(pageContent.brands.interior.brand);
-  const fashionItemCategories = pageContent.price_tags.fashion.price_tag;
-  const interiorItemCategories = pageContent.price_tags.interior.price_tag;
+  const colours = await Category.findAll({ where: { type: 'color' } });
+  const brands = onlySellable ? await Brand.findAll({ where: { sellable: true } }) : await Brand.findAll();
+  const fashionItemCategories = await Category.findAll({ where: { type: 'fashion' } });
+  const interiorItemCategories = await Category.findAll({ where: { type: 'interior' } });
 
-  let brandsIdToName = {};
-  brands.map((brand) => {
-    brandsIdToName[brand.id] = brand.name;
-  })
-
-  let coloursToId = {};
-  colours.map((colour) => {
-    coloursToId[colour.name] = colour.categoryId;
-  })
-
-  let fashionItemCategoriesToId = {};
-  fashionItemCategories.map((category) => {
-    fashionItemCategoriesToId[category.name] = category.categoryId;
-  })
-
-  let interiorItemCategoriesToId = {};
-  interiorItemCategories.map((category) => {
-    interiorItemCategoriesToId[category.name] = category.categoryId;
-  })
-
-  return { "brandsIdToName": brandsIdToName, "coloursToId": coloursToId, "fashionItemCategoriesToId": fashionItemCategoriesToId, "interiorItemCategoriesToId": interiorItemCategoriesToId };
+  return {
+    brands,
+    colours,
+    fashionItemCategories,
+    interiorItemCategories
+  };
 }
 
 export default getBrands;
